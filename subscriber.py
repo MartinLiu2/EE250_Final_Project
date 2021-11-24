@@ -3,6 +3,7 @@ import time
 
 def ultrasonic_callback(client, userdata, msg):
     output = msg.payload.decode("utf-8", "strict")
+    # Take output and give it to website.py to determine if door close/open
     print("VM: " + output + " cm")
 
 def on_connect(client, userdata, flags, rc):
@@ -24,4 +25,4 @@ if __name__ == '__main__':
     client.loop_start()
 
     while True:
-        time.sleep(1)
+        time.sleep(1) 

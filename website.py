@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
-app = Flask(__name__)
 
+app = Flask(__name__)
 intruder_status = True
 
 @app.route('/')
