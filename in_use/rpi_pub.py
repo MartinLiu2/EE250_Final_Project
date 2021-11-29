@@ -5,11 +5,10 @@ from grove_rgb_lcd import *
 
 if __name__ == '__main__':
     client = mqtt.Client()
-    client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
+    client.connect(host="eclipse.usc.edu", port=1883, keepalive=60)
     client.loop_start()
     PORT = 3
-    button = 8
-    pinMode(button, "INPUT")
     while True:
+        print(ultrasonicRead(PORT))
         client.publish("bailey/ultrasonicRanger", ultrasonicRead(PORT))
         time.sleep(1)
