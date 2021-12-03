@@ -12,17 +12,17 @@ if __name__ == '__main__':
     pinMode(buzzer, "OUTPUT")
     count = 0
     buzzer_on = False
+    digitalWrite(buzzer, 0)
     while True:
         digitalWrite(buzzer, 0)
         if buzzer_on:
             digitalWrite(buzzer, 1)
             continue # Delete later
         client.publish("bailey/ultrasonicRanger", ultrasonicRead(PORT))
-        if ultrasonicRead(PORT) < 50:
+        if ultrasonicRead(PORT) < 100:
             count += 1
             if count == 5:
                 buzzer_on = True
-                # Ring buzzer
                 # Shoot gun
                 count = 0
                 continue # Delete later
