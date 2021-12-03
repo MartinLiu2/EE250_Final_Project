@@ -8,11 +8,14 @@ if __name__ == '__main__':
     client.connect(host="eclipse.usc.edu", port=1883, keepalive=60)
     client.loop_start()
     PORT = 3
+    buzzer = 8
+    pinMode(buzzer, "OUTPUT")
     count = 0
     buzzer_on = False
     while True:
+        digitalWrite(buzzer, 0)
         if buzzer_on:
-            # Ring buzzer
+            digitalWrite(buzzer, 1)
             continue # Delete later
         client.publish("bailey/ultrasonicRanger", ultrasonicRead(PORT))
         if ultrasonicRead(PORT) < 50:
