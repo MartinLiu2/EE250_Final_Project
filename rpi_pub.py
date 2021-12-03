@@ -19,6 +19,7 @@ if __name__ == '__main__':
             digitalWrite(buzzer, 1)
             continue # Delete later
         client.publish("bailey/ultrasonicRanger", ultrasonicRead(PORT))
+        print(ultrasonicRead(PORT))
         if ultrasonicRead(PORT) < 100:
             count += 1
             if count == 5:
