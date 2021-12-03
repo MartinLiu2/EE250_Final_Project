@@ -27,4 +27,4 @@ if __name__ == '__main__':
                 # Shoot gun
                 count = 0
                 continue # Delete later
-        time.sleep(1)
+        time.sleep(0.5)
