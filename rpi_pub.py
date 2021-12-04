@@ -36,14 +36,13 @@ if __name__ == '__main__':
         digitalWrite(buzzer, 0)
         if buzzer_on:
             digitalWrite(buzzer, 1)
-            continue # Delete later
         client.publish("bailey/ultrasonicRanger", ultrasonicRead(PORT))
         print(ultrasonicRead(PORT))
+        if not armed:
+            continue
         if ultrasonicRead(PORT) < 100:
             count += 1
             if count == 5 and armed:
                 buzzer_on = True
                 client.publish("bailey/shoot", 1)
-                count = 0
-                continue # Delete later
         time.sleep(0.2)
