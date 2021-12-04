@@ -7,6 +7,7 @@ intruder_status = 0
 threshold_value = 50
 alarm_count = 0
 intruder_detected = False
+armed = False
 
 app.config['MQTT_BROKER_URL'] = 'eclipse.usc.edu'
 app.config['MQTT_BROKER_PORT'] = 1883
@@ -39,14 +40,21 @@ def once_message(client, userdata, msg):
 
 @app.route('/')
 def index():
-    global intruder_detected, alarm_count
+    global intruder_detected, alarm_count, armed
+    armed = False
     intruder_detected = False
     alarm_count = 0
     return render_template('website_disarmed.html')
 
 @app.route('/alarm_armed')
 def alarm_armed():
+    global armed
+    armed = True
+    client.publish("bailey/armed", armed)
     return render_template('website_armed.html', Intruder=intruder_detected)
 
 if __name__ == "__main__":
+    client = mqtt.Client()
+    client.connect(host="eclipse.usc.edu", port=1883, keepalive=60)
+    client.loop_start()
     app.run(debug=True)
