@@ -2,12 +2,17 @@ import paho.mqtt.client as mqtt
 import time
 from gpiozero import AngularServo
 
+#servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
+motorOn = False
+flag = 0
 def shoot_callback(client, userdata, msg):
     output = msg.payload.decode("utf-8", "strict")
     # Take output and give it to website.py to determine if shoot
     print(type(output))
-    servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
-    servo.angle = 90
+    global motorOn
+    motorOn = True
+    #servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
+    #servo.angle = 90
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -28,4 +33,10 @@ if __name__ == '__main__':
     client.loop_start()
 
     while True:
-        time.sleep(1) 
+        time.sleep(1)
+        if motorOn:
+           flag += 1
+           if flag == 1:
+	      servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
+              flag += 1
+           servo.angle = 90 
