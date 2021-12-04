@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 from flask_mqtt import Mqtt
+import paho.mqtt.client as mqtt_package
 
 
 app = Flask(__name__)
@@ -54,7 +55,7 @@ def alarm_armed():
     return render_template('website_armed.html', Intruder=intruder_detected)
 
 if __name__ == "__main__":
-    client = mqtt.Client()
+    client = mqtt_package.Client()
     client.connect(host="eclipse.usc.edu", port=1883, keepalive=60)
     client.loop_start()
     app.run(debug=True)
